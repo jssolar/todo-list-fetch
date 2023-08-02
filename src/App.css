@@ -1,0 +1,17 @@
+body {
+  display: flex;
+  place-content: center;
+  background-color: rgba(2, 16, 36, 0.9);
+  height: auto;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  /* place-content: center; */
+  background-color: rgb(28,28,71);
+  height: auto;
+  color: rgba(0, 255, 208, 0.859)
+}
+
