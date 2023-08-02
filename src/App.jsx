@@ -4,7 +4,7 @@ import './App.css'
 
 
 
-function App() {
+const  App = () => {
 
   const [apiURL] = useState('http://localhost:3000')
   const [users, setUsers] = useState(null)
