@@ -20,22 +20,23 @@ function App() {
   }, [])
 
   const listUsers = (
-      url, 
-      options = { 
-        method: 'GET',
-        headers: {'Content-Type': 'application/json'}}
-    ) => {
-      fetch(url, options)
-    .then((response) => {
-      return response.json()
-    }).then((responseJson) => {
-      console.log(responseJson)
-      setUsers(responseJson)
-
-    }).catch((error) => {
-      console.log(error)
-    })
+    url,
+    options = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
     }
+  ) => {
+    fetch(url, options)
+      .then((response) => {
+        return response.json()
+      }).then((responseJson) => {
+        console.log(responseJson)
+        setUsers(responseJson)
+
+      }).catch((error) => {
+        console.log(error)
+      })
+  }
 
   // /**CREACION DE USUARIO */
   const handleChange = (e) => {
@@ -45,9 +46,12 @@ function App() {
   //captura del evento del formulario
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (task === '')
+      return
     const user = {
       task
     }
+
     const url = `${apiURL}/users`
     const options = {
       method: 'POST',
@@ -74,9 +78,9 @@ function App() {
           setTask('')
         }
       })
-    //.catch((error) => {
-    //   console.log(error)
-    // })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   const handleDelete = id => {
@@ -106,25 +110,26 @@ function App() {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-12">
             <form className='form' onSubmit={handleSubmit} >
-              <input type="text" className='bg-success form-control' value={task} onChange={handleChange} />
+              <input type="text" className=' form-control' value={task} onChange={handleChange} />
               <button className="btn btn-dark w-100">
                 Add Task
               </button>
             </form>
           </div>
-          <div className="col-md-6">
-            <ul className="list-group">
-              {
-                !!users &&
-                users.length > 0 &&
-                users.map((user) => {
-                  return <li key={user.id} className='list-group-item d-flex justify-content-between task ' onClick={() => handleDelete(user.id)}>{user.task}<FaTrash /></li>
-                })
-              }
-            </ul>
-          </div>
+
+        </div>
+        <div className="col-md-12">
+          <ul className="list-group">
+            {
+              !!users &&
+              users.length > 0 &&
+              users.map((user) => {
+                return <li key={user.id} className='list-group-item d-flex justify-content-between task ' onClick={() => handleDelete(user.id)}>{user.task}<FaTrash className='delete' /></li>
+              })
+            }
+          </ul>
         </div>
       </div>
     </>
