@@ -4,13 +4,14 @@ import './App.css'
 
 
 
-const  App = () => {
+const App = () => {
 
   const [apiURL] = useState('http://localhost:3000')
   const [users, setUsers] = useState(null)
   // [{ id: 1, task: "jssolar"}]
 
   const [task, setTask] = useState("")
+  const [upDateTask, setUpDateTask] = useState("")
 
 
   /**OBTENER TAREAS  USUARIO*/
@@ -83,6 +84,47 @@ const  App = () => {
       })
   }
 
+
+
+  const handleUpdate = (id) => {
+
+    const url = `${apiURL}/users${id}`
+    const actualizar = {
+      upDateTask
+    };
+    const options = {
+      method: 'PUT',
+      body: JSON.stringify(actualizar),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    update(url, options)
+
+  }
+
+  const update = (url, options) => {
+    fetch(url, options)
+
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Error al actualizar la tarea.');
+        }
+      })
+      .then((responseJson) => {
+        console.log(responseJson);
+        listUsers(`${apiURL}/users`);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+
+
+
   const handleDelete = id => {
     const url = `${apiURL}/users/${id}`
     const options = {
@@ -116,6 +158,9 @@ const  App = () => {
               <button className="btn btn-dark w-100">
                 Add Task
               </button>
+              <button className="btn btn-dark w-100" onClick={() => handleUpdate}>
+                Update
+              </button>
             </form>
           </div>
 
@@ -126,7 +171,7 @@ const  App = () => {
               !!users &&
               users.length > 0 &&
               users.map((user) => {
-                return <li key={user.id} className='list-group-item d-flex justify-content-between task ' onClick={() => handleDelete(user.id)}>{user.task}<FaTrash className='delete' /></li>
+                return <li key={user.id} className='list-group-item d-flex justify-content-between task'>{user.task}<FaTrash className='delete' onClick={() => handleDelete(user.id)} /></li>
               })
             }
           </ul>

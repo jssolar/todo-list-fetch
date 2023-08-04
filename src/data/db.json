@@ -9,8 +9,16 @@
       "id": 5
     },
     {
-      "task": "terminar proyectos atrasados",
-      "id": 6
+      "task": "actualizar tareas",
+      "id": 7
+    },
+    {
+      "task": "re-re-actualizar tareas",
+      "id": 10
+    },
+    {
+      "task": "Agregar-tareas",
+      "id": 11
     }
   ]
 }
