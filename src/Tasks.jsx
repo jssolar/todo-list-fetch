@@ -4,9 +4,9 @@ import './App.css'
 
 
 
-const App = () => {
+const Tasks = () => {
 
-  const [apiURL] = useState('http://localhost:3000')
+  const [apiURL] = useState('https://playground.4geeks.com/apis/fake/todos/user')
   const [users, setUsers] = useState(null)
   // [{ id: 1, task: "jssolar"}]
 
@@ -17,6 +17,7 @@ const App = () => {
 
   useEffect(() => {
     listUsers(`${apiURL}/users`)
+    
   }, [])
 
   const listUsers = (
@@ -47,15 +48,14 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (task === '')
-      return
-    const user = {
-      task
-    }
+      return 
+     const user = { task }
+    
 
     const url = `${apiURL}/users`
     const options = {
       method: 'POST',
-      body: JSON.stringify(user),
+      body: JSON.stringify([]),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -93,7 +93,7 @@ const App = () => {
     };
     const options = {
       method: 'PUT',
-      body: JSON.stringify(actualizar),
+      body: JSON.stringify([]),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -107,7 +107,7 @@ const App = () => {
 
       .then((response) => {
         if (response.ok) {
-          return response.json();
+          return response.json([]);
         } else {
           throw new Error('Error al actualizar la tarea.');
         }
@@ -124,8 +124,8 @@ const App = () => {
 
 
 
-  const handleDelete = id => {
-    const url = `${apiURL}/users/${id}`
+  const handleDelete =  () => {
+    const url = `${apiURL}/users}`
     const options = {
       method: 'DELETE',
       headers: {
@@ -155,11 +155,12 @@ const App = () => {
             <form className='form' onSubmit={handleSubmit} >
               <input type="text" className=' form-control' value={task} onChange={handleChange} />
               <button className="btn btn-dark w-100">
-                Add Task
+                Add Task(Create User)
               </button>
               <button className="btn btn-dark w-100" onClick={() => handleUpdate}>
                 Update
               </button>
+              <input type="text" className=' form-control' value={task} onChange={handleChange} />
             </form>
           </div>
 
@@ -170,7 +171,7 @@ const App = () => {
               !!users &&
               users.length > 0 &&
               users.map((user) => {
-                return <li key={user.id} className='list-group-item d-flex justify-content-between task'>{user.task}<FaTrash className='delete' onClick={() => handleDelete(user.id)} /></li>
+                return <li key={user.id} className='list-group-item d-flex justify-content-between task'>{user.task}<FaTrash className='delete' onClick={() => handleDelete(user)} /></li>
               })
             }
           </ul>
@@ -180,6 +181,6 @@ const App = () => {
   )
 }
 
-export default App
+export default Tasks
 
 
