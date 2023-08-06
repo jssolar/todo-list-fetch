@@ -6,17 +6,16 @@ import './App.css'
 
 const App = () => {
 
-  const [apiURL] = useState('http://localhost:3000')
+  const [apiURL] = useState('https://playground.4geeks.com/apis/fake/todos/user')
   const [users, setUsers] = useState(null)
   // [{ id: 1, task: "jssolar"}]
-
   const [task, setTask] = useState("")
 
 
   /**OBTENER TAREAS  USUARIO*/
 
   useEffect(() => {
-    listUsers(`${apiURL}/users`)
+    listUsers(`${apiURL}/JUANJO`)
   }, [])
 
   const listUsers = (
@@ -54,7 +53,7 @@ const App = () => {
 
     const url = `${apiURL}/users`
     const options = {
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(user),
       headers: {
         'Content-Type': 'application/json'
@@ -82,45 +81,6 @@ const App = () => {
         console.log(error)
       })
   }
-
-
-
-  const handleUpdate = (id) => {
-
-    const url = `${apiURL}/users${id}`
-    const actualizar = {
-      upDateTask
-    };
-    const options = {
-      method: 'PUT',
-      body: JSON.stringify(actualizar),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-    update(url, options)
-
-  }
-
-  const update = (url, options) => {
-    fetch(url, options)
-
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Error al actualizar la tarea.');
-        }
-      })
-      .then((responseJson) => {
-        console.log(responseJson);
-        listUsers(`${apiURL}/users`);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
 
 
 
@@ -153,16 +113,15 @@ const App = () => {
         <div className="row">
           <div className="col-md-12">
             <form className='form' onSubmit={handleSubmit} >
-              <input type="text" className=' form-control' value={task} onChange={handleChange} />
+              <input type="text"
+                className=' form-control'
+                value={task}
+                onChange={handleChange} />
               <button className="btn btn-dark w-100">
                 Add Task
               </button>
-              <button className="btn btn-dark w-100" onClick={() => handleUpdate}>
-                Update
-              </button>
             </form>
           </div>
-
         </div>
         <div className="col-md-12">
           <ul className="list-group">
@@ -170,7 +129,13 @@ const App = () => {
               !!users &&
               users.length > 0 &&
               users.map((user) => {
-                return <li key={user.id} className='list-group-item d-flex justify-content-between task'>{user.task}<FaTrash className='delete' onClick={() => handleDelete(user.id)} /></li>
+                return (
+                <li
+                  key={user.id}
+                  className='list-group-item d-flex justify-content-between task'>{user.task}<FaTrash
+                    className='delete'
+                    onClick={() => handleDelete(user.id)} />
+              </li>)
               })
             }
           </ul>
